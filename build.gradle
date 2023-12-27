@@ -23,19 +23,19 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// 추가 라이브러리 시작
 	implementation 'javax.servlet:jstl:1.2'// 서버렛
     //implementation 'org.springframework.security:spring-security-taglibs:6.1.4'	// taglibs
-	//implementation 'org.apache.tomcat:tomcat-jasper:9.0.1'	// jasper
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'  // jasper
 	// 추가 라이브러리 종료
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+	//testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
