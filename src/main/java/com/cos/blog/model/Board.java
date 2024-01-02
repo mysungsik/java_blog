@@ -1,33 +1,56 @@
 package com.cos.blog.model;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Board {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	@Column(nullable = false, length = 100)
+	
+	@Column(nullable = false, length = 200)
 	private String title;
+
+	@Lob
+	private String content;
 	
 	@ColumnDefault("0")
 	private int count;
 	
-	@ManyToOne								// Many(현 Model = Board)가 One(User Model) 에 종속 → 여러개의 글은 하나의 유저에 의해 작성 가능
-	@JoinColumn(name="userId")	// 컬럼 이름은 userId 가 된다.
-	private User user;						// User 타입( User Model) 의 Primary Key 와 함께 Join 된다.
+	@CreationTimestamp
+	private Timestamp createDate;
 	
-	@Lob	// 대용량 데이터를 처리 (블로그 글의 내용값과 같은)
-	private String content;
+	@ManyToOne	(fetch = FetchType.EAGER)
+	@JoinColumn(name="userId")
+	private User user;
+	
+	// mappedBy : 연관관계의 주인(소유자) 가 아니다
+	//					→ FK가 아니니, DB 에 컬럼을 만들지 말아라.
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+	private List<Reply> reply;
 	
 }

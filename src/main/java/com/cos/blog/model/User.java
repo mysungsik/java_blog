@@ -1,6 +1,6 @@
 package com.cos.blog.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,10 +10,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class User {
-		@Id // primaryKey
+		@Id 
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private int id;
 		
@@ -26,6 +34,9 @@ public class User {
 		@Column(nullable = false, length = 100)
 		@ColumnDefault("'test@test.com'")
 		private String email;
+		
+		@ColumnDefault("'user'")
+		private String role;
 		
 		@CreationTimestamp
 		private Timestamp createDate;
